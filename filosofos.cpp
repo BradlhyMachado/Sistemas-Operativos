@@ -14,7 +14,7 @@ int main(void){
 }
 
 void filosofo(char *arg){
-	for(int i=0; i<5; i++){
+	for(int i=0; true; i++){
 		printf("%s estoy comiendo : %d \n", arg, i);
 	}
 }

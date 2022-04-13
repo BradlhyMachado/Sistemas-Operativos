@@ -3,29 +3,33 @@
 
 //gcc filosofos.cpp -pthread
 
+#define NUM_FILOSOFOS 5
+
 void *filosofo(void *arg);
 
 int main(void){
 	printf("FILOSOFOS\n");
 
-	char fil1[20]= "Platon";
-	char fil2[20]= "Pitagoras";
-
-	pthread_t platon, pitagoras;
-
-	pthread_create(&platon, NULL, &filosofo, &fil1);
-	pthread_create(&pitagoras, NULL, &filosofo, &fil2);	
+	pthread_t filosofos[NUM_FILOSOFOS];
+	int ids[NUM_FILOSOFOS];
 	
-	pthread_join(platon, NULL);
-	pthread_join(pitagoras, NULL);
+	for(int i=0; i<NUM_FILOSOFOS; i++){
+		ids[i]=i+1;
+		pthread_create(&filosofos[i], NULL, &filosofo, &ids[i]);
+	}	
+	for(int i=0; i<NUM_FILOSOFOS; i++){
+		pthread_join(filosofos[i], NULL);
+	}
 
 	return 0;
 }
 
 void *filosofo(void *arg){
-	char *arg2=(char*)arg;
+	int arg2=*((int*)arg);
 	for(int i=0; true; i++){
-		printf("%s estoy comiendo : %d \n", arg2, i);
+		printf("Filosofo-%d estoy comiendo : %d \n", arg2, i);
 	}
 	return NULL;
-} 
+}
+
+

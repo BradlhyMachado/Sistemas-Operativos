@@ -51,8 +51,8 @@ void comer(int a){
 	tomarCubierto(a, cubierto1);
 	tomarCubierto(a, cubierto2);
 	printf("Filosofo %d comiendo \n", a);
-	//int random = rand()%5;
-	//sleep(random);
+	int random = rand()%5;
+	sleep(random);
 	soltarCubierto(cubierto1, cubierto2);
 }
 

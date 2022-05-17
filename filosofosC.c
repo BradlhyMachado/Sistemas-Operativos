@@ -1,4 +1,4 @@
-#Include <pthread.h>
+#include <pthread.h>
 #include <semaphore.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,7 +29,7 @@ void pensar(int i){
   int gasto=rand() % 2001;
   estomagos[i]=estomagos[i]-gasto;			// ----6. DESGASTO DEL RECURSO COMIDA AL PENSAR----
   pensando=pensando+gasto;
-  printf("Filosofo %d pensando %d, estomago en %d \n", i, gasto, estomagos[i]);
+  printf(" Filosofo %d pensando %d, estomago en %d \n", i, gasto, estomagos[i]);
   gasto=0;
   estado[i]=PENSANDO;
   sleep(2);
@@ -39,32 +39,38 @@ void pensar(int i){
 void comer(int i){
   bool estadoint=true;
   int xComer=(rand() % 10001);
+  
+  //////////////////////
+  //printf("i=%d ",nom);
+  //////////////////////
+  
   //Pensar por que el filosofo comio mas de lo que puede
-  if(estomagos[i]>estMax){
-    printf(" ----Filosofo %d comio %d, mas de lo que debe %d---- \n",i, estomagos[i],estMax);
+  if(estomagos[i]>=estMax){
+    printf(" ----Filosofo %d comio %d, mas de lo que debe %d---- \n",i , estomagos[i],estMax);
     estadoint=false;
     pensar(i);
   }
   if(estadoint==true){
-    if(xComer<COMIDA){
+    int ii=i; ////////////////////////////////////
+	if(xComer<COMIDA){
       estomagos[i]=estomagos[i]+xComer;
       COMIDA=COMIDA-xComer;
       totalComido=totalComido+xComer;
-
-      printf(" Filosofo %d comio %d, estomago en %d \n"), i, xComer, estomagos[i];
+      printf(" Filosofo %i comio %d, estomago en %d \n"),ii , xComer, estomagos[i];
     }
     else{
       xComer=COMIDA;
       estomagos[i]=estomagos[i]+xComer;
       COMIDA=COMIDA-xComer;
       totalComido=totalComido+xComer;
-
-      printf(" Filosofo %d comio %d, estomago en %d \n", i, xComer, estomagos[i]);
+      printf(" Filosofo %i comio %d, estomago en %d \n",ii , xComer, estomagos[i]);
       COMIDA=2147483647;		//Restaurando COMIDA
-      contadorComida++;
+      contadorComida++;			//Registro de restauracion de comida
       printf("----Recurso Comida restaurada %d---- \n", contadorComida);
-      //------------------------------------------
-     
+      // ----7. Demostrar Registo----
+      printf("----Total Comido %d---- \n", totalComido);
+      printf("----Total Pensado %d---- \n", pensando);
+      printf("----Total Estómagos %d---- \n", estomagos[0]+estomagos[1]+estomagos[2]);  
     }
   }
   xComer=0; 
@@ -109,7 +115,7 @@ void *filosofos(int i){
 }
 
 main(){
-  int i;
+  int i, f, g;
   srand (time(NULL));
   // ----INICIA LOS REQUERIMIENROS DE LOS FILÓSOFOS----
   for(i=0; i<NUMFIL; i++){
@@ -121,13 +127,13 @@ main(){
   sem_init (&mutex, 0, 1);
 
   // Filósofos iniciados, con hilos
-  for (i=0; i<NUMFIL; i++){
-    pthread_create(&filos[i], NULL, (void*)filosofos, (void *)i);
+  for (f=0; f<NUMFIL; f++){
+    pthread_create(&filos[f], NULL, (void*)filosofos, (void*)f);
   }
  
   // Los filosofos esperan a que termine otros para iniciar recursos
-  for (i=0; i<NUMFIL; i++){
-    pthread_join(filos[i],NULL);
+  for (g=0; g<NUMFIL; g++){
+    pthread_join(filos[g],NULL);
   }
   return 0;
 }

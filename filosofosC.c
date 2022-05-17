@@ -5,14 +5,14 @@
 #include <stdbool.h>
 #include <unistd.h>
 
-#define NUMFIL 3               // ----1. "N FILÓSOFOS"----
+#define NUMFIL 3				// ----1. "N FILÓSOFOS"----
 #define IZQ (i-1)%NUMFIL        // Vecino izquierdo de i
 #define DER (i+1)%NUMFIL        // Vecino derecho de i
 #define PENSANDO 0
 #define CON_HAMBRE 1
 #define COME 2
 
-int COMIDA=50000;               // ----2. RECURSO COMIDA----2147483647
+int COMIDA=50000;              
 pthread_t filos[NUMFIL];        // Hilos que representan a los filósofos
 sem_t mutex;                    // Semáforo para la sección crítica
 sem_t s[NUMFIL];                // Semáforos para los filósofos
@@ -61,7 +61,7 @@ void deja_tndrs(int i){
 
 void *filosofos(int i){
   for(;;){
-    pensar(i);                // ----4. CADA FILÓSOFO EMPIEZA PENSANDO----  
+    pensar(i);                
     toma_tndrs(i);
     comer(i) ;
     deja_tndrs(i) ;

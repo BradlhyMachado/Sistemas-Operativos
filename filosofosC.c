@@ -12,7 +12,7 @@
 #define CON_HAMBRE 1
 #define COME 2
 
-int COMIDA=50000;              
+int COMIDA=50000;				// ----2. RECURSO COMIDA 2147483647----
 pthread_t filos[NUMFIL];        // Hilos que representan a los filósofos
 sem_t mutex;                    // Semáforo para la sección crítica
 sem_t s[NUMFIL];                // Semáforos para los filósofos

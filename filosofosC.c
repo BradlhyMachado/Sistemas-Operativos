@@ -19,17 +19,53 @@ sem_t s[NUMFIL];                // Semáforos para los filósofos
 int estado[NUMFIL];             //estado actual de cada filósosfo
 int estomagos[NUMFIL];			// ----3. ESTOMAGOS PARA CADA FILOSOFO----
 int estMax=20000;				// ----3. Rango cercano a lo máximo del estomago
+int contadorComida=0;			// ----2. Registro de restauracion de comida
+int totalComido=0;				// -------------------------------------
 
 //El filosofo i pensará
 void pensar(int i){
-  printf("Filosofo %d pensando \n", i);
+  int gasto=rand() % 2001;
+  estomagos[i]=estomagos[i]-gasto;			// ----6. DESGASTO DEL RECURSO COMIDA AL PENSAR----
+  //------------
+  printf("Filosofo %d pensando %d, estomago en %d \n", i, gasto, estomagos[i]);
+  gasto=0;
   estado[i]=PENSANDO;
   sleep(2);
 }
 
 //El filosofo i, comerá
 void comer(int i){
-  printf("Filosofo %d comiendo \n", i);
+  bool estadoint=true;
+  int xComer=(rand() % 10001);
+  //Pensar por que el filosofo comio mas de lo que puede
+  if(estomagos[i]>estMax){
+    printf(" ----Filosofo %d comio %d, mas de lo que debe %d---- \n",i, estomagos[i],estMax);
+    estadoint=false;
+    pensar(i);
+  }
+  if(estadoint==true){
+    if(xComer<COMIDA){
+      estomagos[i]=estomagos[i]+xComer;
+      COMIDA=COMIDA-xComer;
+      totalComido=totalComido+xComer;
+
+      printf(" Filosofo %d comio %d, estomago en %d \n"), i, xComer, estomagos[i];
+    }
+    else{
+      xComer=COMIDA;
+      estomagos[i]=estomagos[i]+xComer;
+      COMIDA=COMIDA-xComer;
+      totalComido=totalComido+xComer;
+
+      printf(" Filosofo %d comio %d, estomago en %d \n", i, xComer, estomagos[i]);
+      COMIDA=2147483647;		//Restaurando COMIDA
+      contadorComida++;
+      printf("----Recurso Comida restaurada %d---- \n", contadorComida);
+      //------------------------------------------
+     
+    }
+  }
+  xComer=0; 
   estado[i]=COME;	
   sleep(2);
 }

@@ -1,4 +1,4 @@
-#include <pthread.h>
+#Include <pthread.h>
 #include <semaphore.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,15 +18,17 @@ sem_t mutex;                    // Semáforo para la sección crítica
 sem_t s[NUMFIL];                // Semáforos para los filósofos
 int estado[NUMFIL];             //estado actual de cada filósosfo
 int estomagos[NUMFIL];			// ----3. ESTOMAGOS PARA CADA FILOSOFO----
-int estMax=20000;				// ----3. Rango cercano a lo máximo del estomago
-int contadorComida=0;			// ----2. Registro de restauracion de comida
-int totalComido=0;				// -------------------------------------
+int estMax=20000;				// ----3. Rango cercano a lo máximo del estomago----
+int contadorComida=0;			// ----2. Registro de restauracion de comida----
+int totalComido=0;				// ----7. Registro de recurso Comida----
+int pensando=0;					// ----7. Registro de total pensado----
+int comido=0;					// ----7. Registro de total comido----
 
 //El filosofo i pensará
 void pensar(int i){
   int gasto=rand() % 2001;
   estomagos[i]=estomagos[i]-gasto;			// ----6. DESGASTO DEL RECURSO COMIDA AL PENSAR----
-  //------------
+  pensando=pensando+gasto;
   printf("Filosofo %d pensando %d, estomago en %d \n", i, gasto, estomagos[i]);
   gasto=0;
   estado[i]=PENSANDO;

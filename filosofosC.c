@@ -16,7 +16,9 @@ int COMIDA=50000;				// ----2. RECURSO COMIDA 2147483647----
 pthread_t filos[NUMFIL];        // Hilos que representan a los filósofos
 sem_t mutex;                    // Semáforo para la sección crítica
 sem_t s[NUMFIL];                // Semáforos para los filósofos
-int estado [NUMFIL];            //estado actual de cada filósosfo
+int estado[NUMFIL];             //estado actual de cada filósosfo
+int estomagos[NUMFIL];			// ----3. ESTOMAGOS PARA CADA FILOSOFO----
+int estMax=20000;				// ----3. Rango cercano a lo máximo del estomago
 
 //El filosofo i pensará
 void pensar(int i){
@@ -74,7 +76,8 @@ main(){
   // ----INICIA LOS REQUERIMIENROS DE LOS FILÓSOFOS----
   for(i=0; i<NUMFIL; i++){
     sem_init (&s[i], 0, 1);
-    estado[i]=PENSANDO;       //Filosofos inician pensando 
+    estado[i]=PENSANDO;			 //Filosofos inician pensando
+    estomagos[i]=0;				 //Estomagos inician en 0
   }
 
   sem_init (&mutex, 0, 1);

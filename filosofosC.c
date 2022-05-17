@@ -115,7 +115,7 @@ main(){
     estado[i]=PENSANDO;			 //Filosofos inician pensando
     estomagos[i]=0;				 //Estomagos inician en 0
   }
-
+  // ----5. CONSIDERAR DEAD LOCKS----
   sem_init (&mutex, 0, 1);
 
   // Filósofos iniciados, con hilos

@@ -66,11 +66,11 @@ void comer(int i){
       printf(" Filosofo %i comio %d, estomago en %d \n",ii , xComer, estomagos[i]);
       COMIDA=2147483647;		//Restaurando COMIDA
       contadorComida++;			//Registro de restauracion de comida
-      printf("----Recurso Comida restaurada %d---- \n", contadorComida);
+      printf(" ----Recurso Comida restaurada %d---- \n", contadorComida);
       // ----7. Demostrar Registo----
-      printf("----Total Comido %d---- \n", totalComido);
-      printf("----Total Pensado %d---- \n", pensando);
-      printf("----Total Estómagos %d---- \n", estomagos[0]+estomagos[1]+estomagos[2]);  
+      printf(" ----Total Comido %d---- \n", totalComido);
+      printf(" ----Total Pensado %d---- \n", pensando);
+      printf(" ----Total Estómagos %d---- \n", estomagos[0]+estomagos[1]+estomagos[2]);  
     }
   }
   xComer=0; 
